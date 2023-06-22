@@ -200,12 +200,44 @@ In View:
 # Primary Btn:
 
 ```php
-    <x-primary-button>Create</x-primary-button>
+<x-primary-button :background="'red'" onclick="deleteItem('Vehicle',{{$vehicle->id}},'{{$vehicle->name}}','{{route('cars.delete')}}')">Delete</x-primary-button>
+
 ```
 
 ```php
-<button {{ $attributes->merge(['type' => 'submit', 'class' => 'block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800']) }}>
+@props(['background'])
+
+@php
+   $colors = ['Slate' => 'Slate','Gray' => 'Gray','Zinc' => 'Zinc','Neutral' => 'Neutral','Stone' => 'Stone','Red' => 'Red','Orange' => 'Orange','Amber' => 'Amber','Yellow' => 'Yellow','Lime' => 'Lime','Green' => 'Green','Emerald' => 'Emerald','Teal' => 'Teal','Cyan' => 'Cyan','Sky' => 'Sky','Blue' => 'Blue','Indigo' => 'Indigo','Violet' => 'Violet','Purple' => 'Purple','Fuchsia' => 'Fuchsia','Pink' => 'Pink','Rose' => 'Rose'];
+
+
+    $colors = array_combine(
+        array_map('strtolower', array_keys($colors)),
+        array_map('strtolower', array_values($colors))
+    );
+
+    if($colors[$background]){
+        //$background = $colors[$background];
+
+        $background = "dark:focus:ring-$colors[$background]-800 bg-$colors[$background]-700 hover:bg-$colors[$background]-800 focus:ring-$colors[$background]-300 dark:bg-$colors[$background]-600 dark:hover:bg-$colors[$background]-700";
+    }
+
+@endphp
+
+<button {{ $attributes->merge(['type' => 'submit', 'class' => "$background text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"]) }}>
     {{ $slot }}
 </button>
+
+
+
+{{-- dark:focus:ring-blue-800
+bg-blue-700
+hover:bg-blue-800
+focus:ring-blue-300
+dark:bg-blue-600
+dark:hover:bg-blue-700
+
+'dark:focus:ring-blue-800 bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700' --}}
+
 
 ```
