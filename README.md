@@ -1,4 +1,4 @@
-# select2
+# Select2 plugin
 
 ```php
 In Controller:
@@ -13,7 +13,7 @@ In View:
 
 <select multiple {{ $attributes->merge(['class' => 'select2 block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500']) }} name="{{ $name }}">
     @foreach ($options as $value => $label)
-        <option value="{{ $value }}" {{ (collect($selected)->contains($value)) ? 'selected' : '' }}>{{ $label }}</option>
+        <option value="{{ $value }}" {{ (collect($selected)->contains($value)) ? 'selected' : '' }}>{{ $label }}[]</option>
     @endforeach
 </select>
 
