@@ -205,7 +205,7 @@ In View:
 ```
 
 ```php
-@props(['background'])
+@props(['background' => 'blue','url' => null,'type' => 'button'])
 
 @php
    $colors = ['Slate' => 'Slate','Gray' => 'Gray','Zinc' => 'Zinc','Neutral' => 'Neutral','Stone' => 'Stone','Red' => 'Red','Orange' => 'Orange','Amber' => 'Amber','Yellow' => 'Yellow','Lime' => 'Lime','Green' => 'Green','Emerald' => 'Emerald','Teal' => 'Teal','Cyan' => 'Cyan','Sky' => 'Sky','Blue' => 'Blue','Indigo' => 'Indigo','Violet' => 'Violet','Purple' => 'Purple','Fuchsia' => 'Fuchsia','Pink' => 'Pink','Rose' => 'Rose'];
@@ -216,28 +216,30 @@ In View:
         array_map('strtolower', array_values($colors))
     );
 
-    if($colors[$background]){
+    if($colors[$background] == 'indigo'){
         //$background = $colors[$background];
+        $background = "dark:focus:ring-indigo-800 bg-indigo-700 hover:bg-indigo-800 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700";
+    }elseif($colors[$background] == 'red'){
+        $background = "dark:focus:ring-red-800 bg-red-700 hover:bg-red-800 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700";
 
-        $background = "dark:focus:ring-$colors[$background]-800 bg-$colors[$background]-700 hover:bg-$colors[$background]-800 focus:ring-$colors[$background]-300 dark:bg-$colors[$background]-600 dark:hover:bg-$colors[$background]-700";
+    }elseif($colors[$background] == 'blue'){
+        $background = "dark:focus:ring-blue-800 bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700";
     }
 
 @endphp
 
-<button {{ $attributes->merge(['type' => 'submit', 'class' => "$background text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"]) }}>
+<button type="{{$type}}" {{ $attributes->merge(['type' => 'submit', 'class' => "$background text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"]) }}>
+
+    @if ($url !== null)
+    <a href="{{$url ?? '#' }}" >
+
+        {{ $slot }}
+    </a>
+    @else
     {{ $slot }}
+    @endif
 </button>
 
-
-
-{{-- dark:focus:ring-blue-800
-bg-blue-700
-hover:bg-blue-800
-focus:ring-blue-300
-dark:bg-blue-600
-dark:hover:bg-blue-700
-
-'dark:focus:ring-blue-800 bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700' --}}
 
 
 ```
